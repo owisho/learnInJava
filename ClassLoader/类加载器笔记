@@ -4,3 +4,10 @@
 这里所指的“相等”，包括代表类的Class对象的equals()方法、
 isAssignableFrom()方法、isInstance()方法的返回结果，包括使用instanceof
 关键字做对象所属关系判定等情况。
+
+isAssignableFrom(Class<?> cls)方法：
+判断这个Class Object代表的这个class或者这个interface是否与参数类相同
+或者是参数类的父类或者父接口类。
+特殊说明，这个方法会检验这个给定的Class parameter能否通过identity或者
+通过widening reference转化成调用这个方法的类参数对象
+参见《The Java Language Specification》的5.1.1和5.1.4查看详细信息。
