@@ -11,3 +11,20 @@ isAssignableFrom(Class<?> cls)方法：
 特殊说明，这个方法会检验这个给定的Class parameter能否通过identity或者
 通过widening reference转化成调用这个方法的类参数对象
 参见《The Java Language Specification》的5.1.1和5.1.4查看详细信息。
+
+equals(Object obj)
+表明是否对象obj与当前对象相同
+这个equals方法实现了一个在非空对象上的相等关系：
+自反性reflexive：非空对象x，x.equals(x)应该返回true
+对称性symmetric：非空对象x，y；x.equals(y)返回true当且仅当y.equals(x)返回true
+传递性transitive：非空对象x，y，z；x.equals(y)返回true，y.equals(z)返回true，
+则x.equals(z)应该返回true
+一致性consistent：非空对象x，y；多次调用x.equals(y)的返回结果应该相同
+
+非空对象x，x.equals(null)应该返回false
+Object 类的 equals 方法实现对象上差别可能性最大的相等关系；
+两个非空对象x，y，equals方法返回true，当且仅当x，y对象指向相同的对象，
+（即x==y有true）
+注意：在重写equals方法的时候，应该重写hashCode方法，也就是说（equals方法
+相同的对象必须有相同的hashCode）
+
