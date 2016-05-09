@@ -26,3 +26,83 @@
 5）当使用JDK1.7的动态语言支持时，如果一个java.lang.invoke.MethodHandle实例最后的解析
 结果REF_getStatic、REF_putStatic、REF_invokeStatic的方法疾病，并且这个方法句柄所对应的
 类没有进行过初始化，则需要先触发其初始化。
+
+
+被动引用不会触发初始化，一下为例子
+package org.fenixsoft.classloading;
+
+/**
+*被动使用类字段演示一：
+*通过子类引用父类的静态字段，不会导致子类初始化
+**/
+public class SuperClass{
+  static{
+    System.out.println("SuperClass init!");
+  }
+  public static int value=123;
+}
+
+public class SubClass extends SuperClass{
+  static{
+    System.out.println("SubClass init!");
+  }
+}
+
+/**
+*非主动使用字段类演示
+**/
+public class NotInitialization{
+  public static void main(String[] args){
+    System.out.println(SubClass.value);
+  }
+}
+上述代码运行后，只会输出“SuperClass init!”而不会输出“SubClass init!”
+
+
+package org.fenixsoft.classloading;
+
+/**
+*被动使用类字段演示二：
+*通过数组定义来引用类，不会触发此类的初始化
+**/
+public class NotInitialization{
+  public static void main(String[] args){
+    SuperClass[] sca = new SuperClass[10];
+  }
+}
+程序运行后不会输出“SuperClass init!”
+
+package org.fenixsoft.classloading;
+
+/**
+*被动使用类字段演示三：
+*常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，
+*因此不会触发定义常量的类的初始化。
+**/
+public class ConstClass{
+  static{
+    System.out.println("ConstantClass init!");
+  }
+  
+  public static final String HELLOWORLD = "hello world";
+}
+/**
+*非主动使用类字段演示
+**/
+public class NotIintialization{
+  public static void main(String[] args){
+    System.out.println(ConstClass.HELLOWWORLD);
+  }
+}
+上述程序运行不会输出“ConstClass init!”
+fianl类型的常量在编译阶段通过常量传播优化，已经将此常量的值“hello world”存储到
+了NotInitialization类的常量池中，以后NotInitialization对fianl常量的引用实际上都
+被转化为NotInitialization类对自身常量池的引用
+
+接口的初始化与类的初始化并不完全一样：
+相同点：接口与类一样都有初始化过程（接口中不能使用static{}语句块，但是编译器仍
+然会为接口生成<clinit>()类构造器，用于初始化接口中所定义的成员变量）
+接口与类的真正区别是在前面所说的5中请款各种的第3种：当一个类在初始化时，要求其
+父类都已经全部初始化过，但是在一个接口初始化时，并不要求其父接口全部都完成了初
+始化，只有在真正使用到父接口的时候才会初始化。
+
