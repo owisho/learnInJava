@@ -1,0 +1,17 @@
+#相关名词：
+加载：Loading
+验证：Verification
+准备：Preparation
+解析：Resolution
+初始化：Initialization
+使用：Using
+卸载：Unloading
+连接：Linking（包括：验证、准备、解析）
+
+#工作顺序：
+加载、验证、准备、初始化、卸载这5个阶段按顺序开始（仅仅是开始而不是“进行”和“完成”），
+解析阶段不一定：在某些情况下在初始化之后再开始，某些情况下在准备后开始
+
+#初始化的5中情况：
+虚拟机规定有且只有5中情况必须立即对类进行“初始化”：
+1）遇到new、getstatic、putstatic、或invokestatic这4条字节码命令时，
