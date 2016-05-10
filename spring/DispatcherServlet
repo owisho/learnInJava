@@ -1,0 +1,14 @@
+DispatcherServlet是一个servlet类，所以符合servlet执行顺序：init()，doService()，destory()
+
+DispatcherServlet的继承关系：
+Object
+  GenericServlet
+    HttpServlet
+      HttpServletBean
+        FrameWorkServlet
+          DispatcherServlet
+          
+DispatcherServlet的初始化方法位于HttpServletBean中，HttpServletBean--need to do--预留initServletBean()接口
+FrameWorkServlet实现initServletBean()方法--need to do--通过initWebApplicationContext()在方法内提供onRefresh()
+DispatcherServlet实现onRefresh()进行初始化
+
