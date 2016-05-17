@@ -1,0 +1,133 @@
+源代码：
+package per.owisho.classloader;
+
+/**
+ * 查看类的加载时机和初始化时机
+ * @author owisho
+ *
+ */
+public class LoadAndInit {
+
+	{
+		System.out.println(HELLO);
+		System.out.println(WORLD);
+	}
+	
+	/*下方注释中的内容java编译器报错为：Cannot reference a field before it is defined
+	个人理解为：静态内容初始化是按照代码的字面顺序执行的，因为字面顺序static静态块位于
+	两个变量之前所以编译器认为在两个变量还没有初始化之前调用这两个变量是有问题的，此时
+	如果两个变量可以被访问，那么，访问当的两个变量的值应该为null*/
+	/*static{
+		System.out.println(HELLO);
+		System.out.println(WORLD);
+	}*/
+	
+	static{
+		System.out.println("执行了static块");
+	}
+	
+	public static final String HELLO = "hello";
+	
+	public static String WORLD = "world";
+	
+	static{
+		System.out.println("执行了static块1");
+	}
+	
+	public LoadAndInit(){
+		System.out.println("进行了初始化");
+	}
+	
+}
+
+执行下面的测试代码：
+package per.owisho.classloader;
+
+public class TestLoadAndInit {
+
+	public static void main(String[] args) {
+		
+		System.out.println(LoadAndInit.HELLO);
+		
+	}
+	
+}
+得到的结果为：hello；
+原因是final修饰符修饰的变量在类加载到虚拟机的时候，已经
+被jvm赋值为hello并且提供了可访问的接口，其实此时的
+public static final String HELLO 变量已经与
+类LoadAndInit无直接的关联关系了，在使用HELLO变量的时候已经
+不需要将类中的数据进行初始化。所以没有触发静态块内容的执行
+
+执行下面的测试代码：
+package per.owisho.classloader;
+
+public class TestLoadAndInit {
+
+	public static void main(String[] args) {
+		
+		System.out.println(LoadAndInit.WORLD);
+		
+	}
+	
+}
+得到的结果为：
+执行了static块
+执行了static块1
+world
+原因是：非final的静态变量没有脱离与类的关系，在调用非final的静态变量时
+程序仍然需要先将整个类内的数据进行初始化，初始化类数据需要按照静态对象
+或者静态块的顺序执行，所以就按照程序中定义的顺序进行了打印，但是由于
+调用的为静态属性，所以类不需要生成对象也就不用调用类的构造函数，所以就
+不会输出“进行了初始化”
+
+
+执行下面的测试代码：
+package per.owisho.classloader;
+
+public class TestLoadAndInit {
+
+	public static void main(String[] args) {
+		
+		new LoadAndInit();
+		
+		new LoadAndInit();
+		
+	}
+	
+}
+得到如下结果：
+执行了static块
+执行了static块1
+hello
+world
+进行了初始化
+hello
+world
+进行了初始化
+
+抛开
+{
+	System.out.println(HELLO);
+	System.out.println(WORLD);
+}
+这部分代码的输出结果很容易理解：
+类在第一次生成对象的时候需要初始化静态内容，所以执行了
+static块，执行完static块之后，类用构造器创造了一个类对象，
+因为静态部分只需要进行一次初始化，初始化之后jvm会将类的静态内容保存
+所以第二次创建对象的时候静态块没有再次执行，类只调用了自己的构造函数
+此时再看
+{
+	System.out.println(HELLO);
+	System.out.println(WORLD);
+}
+这段代码发现它的输出结果位于类的构造方法执行之前，所以个人理解
+这种形式的语句块为对象语句块，作用是在对象生成前进行一些预处理操作，
+且因为它是与对象相关的非静态数据，所以每次创建对象前都会执行一次
+，同时这种语句块的执行顺序也是按照在类中的定义顺序执行，另外，因为
+这种语句块是对象相关的，在创建对象前类已经对其静态内容做了初始化操作，
+所以这种语句块可以使用在其后书写的静态变量
+
+
+注：测试中在java.lang.ClassLoader类中的loadClass方法上打了断点，但是
+没有触发，说明加载这个类的ClassLoader不是java.lang.ClassLoader
