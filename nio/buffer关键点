@@ -1,23 +1,23 @@
 Java的nio的buffer的关键点：
 position
-读取和写入时的位置信息
+  读取和写入时的位置信息
 limit
-读取和写入时的最大限度信息（真实的信息内容长度）
+  读取和写入时的最大限度信息（真实的信息内容长度）
 capacity
-buffer的总容量
+  buffer的总容量
 flip()方法
-flip()方法将buffer由写入状态转化成读取状态
-buffer执行flip()方法时会将写入时的position赋值给limit做为可以读取的真实内容值容量，
-postion的值会置为0
+  flip()方法将buffer由写入状态转化成读取状态
+  buffer执行flip()方法时会将写入时的position赋值给limit做为可以读取的真实内容值容量，
+  postion的值会置为0
 rewind()方法
-rewind()方法会将position的值重置为0，limit的值不变，可以重新从buffer中读取数据
+  rewind()方法会将position的值重置为0，limit的值不变，可以重新从buffer中读取数据
 clear()
-clear()方法是将buffer由读取状态转化为写入状态，此操作会将buffer的position置为0，
-同时limit会变为capacity
+  clear()方法是将buffer由读取状态转化为写入状态，此操作会将buffer的position置为0，
+  同时limit会变为capacity
 compact()
-compact()方法会将buffer中上次读取剩余的元素拷贝到buffer的起始处，并将position的值
-设置为第一个未读元素的后面，这样写入新数据的时候就不会覆盖原有的未读元素
+  compact()方法会将buffer中上次读取剩余的元素拷贝到buffer的起始处，并将position的值
+  设置为第一个未读元素的后面，这样写入新数据的时候就不会覆盖原有的未读元素
 mark()和reset()
-mark()方法可以标记特定位置，与reset()方法配合使用，当mark()了特殊位置之后，使用
-reset()方法即可以恢复到这个位置，即把position的值置为当时mark()方法标记的值
+  mark()方法可以标记特定位置，与reset()方法配合使用，当mark()了特殊位置之后，使用
+  reset()方法即可以恢复到这个位置，即把position的值置为当时mark()方法标记的值
 
