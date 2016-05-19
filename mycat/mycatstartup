@@ -1,0 +1,5 @@
+MycatServer采用单例模式
+MycatServer初始化加载文件顺序
+先加载rule.xml和rule.dtd
+再加载myschema.xml和schema.dtd
+然后加载myserver.xml和server.dtd
