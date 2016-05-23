@@ -1,0 +1,53 @@
+package per.owisho.learn.classloader;
+
+class Insect {
+
+	private int i = 9;
+	
+	protected int j;
+	
+	Insect(){
+		System.out.println("i="+i+",j="+j);
+		j=39;
+	}
+	
+	private static int x1=printInit("static Insect.x1 initialized");
+	
+	static int printInit(String s){
+		System.out.println(s);
+		return 47;
+	}
+}
+
+public class Beetle extends Insect{
+	
+	private int k = printInit("Beetle.k initialized");
+	
+	public Beetle(){
+		System.out.println("k="+k);
+		System.out.println("j="+j);
+	}
+
+	private static int x2 = printInit("static Beetle.x2 initialized");
+	
+	public static void main(String[] args) {
+		System.out.println("Beetle contructor");
+		Beetle b = new Beetle();
+	}
+}
+
+
+执行结果如下：
+static Insect.x1 initialized
+static Beetle.x2 initialized
+Beetle contructor
+i=9,j=0
+Beetle.k initialized
+k=47
+j=39
+结果说明：
+1.类初始化时先初始化类中的静态方法和变量，且方法在变量之前；
+2.初始化时如果类继承自某个父类，则类初始化之前需要先初始化父类；
+3.类的构造器调用前会初始化类中的所有变量，非静态变量在使用构造器创建
+对象前也已经初始化；
+4.类如果继承自父类，那么类的构造器调用时必然先调用父类的构造器；
