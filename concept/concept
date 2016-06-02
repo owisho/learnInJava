@@ -2,3 +2,6 @@ POJO:plain old java object
 JPA:java persistence API 
 JDO:java data object
 DSL:domain specific language 
+
+Spring:
+IoC:Inversion of Control 控制反转
