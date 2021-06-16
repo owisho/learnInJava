@@ -1,12 +1,14 @@
 Java的nio的buffer的关键点：
 mark
-  标记某一个时刻的位置信息，flip等操作时重置的标准
+  标记某一个时刻的位置信息，reset操作时重置的标准
 position
   读取和写入时的位置信息
 limit
   读取和写入时的最大限度信息（真实的信息内容长度）
 capacity
   buffer的总容量
+  
+  
 flip()方法
   flip()方法将buffer由写入状态转化成读取状态
   buffer执行flip()方法时会将写入时的position赋值给limit做为可以读取的真实内容值容量，
