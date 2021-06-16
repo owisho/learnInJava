@@ -1,4 +1,6 @@
 Java的nio的buffer的关键点：
+mark
+  标记某一个时刻的位置信息，flip等操作时重置的标准
 position
   读取和写入时的位置信息
 limit
