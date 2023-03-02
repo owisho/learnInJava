@@ -1,0 +1,11 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 02 08:35:40 CST 2023*/
+/* DO NOT EDIT */
+
+grant codeBase "https://docs.oracle.com/javase/tutorial/security/tourl/examples/" {
+};
+
+grant codeBase "file:///home/owisho/workspace/java/learnInJava/target/classes/" {
+  permission java.util.PropertyPermission "user.home", "read";
+  permission java.util.PropertyPermission "java.home", "read";
+};
+
