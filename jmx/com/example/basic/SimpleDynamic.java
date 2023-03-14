@@ -1,3 +1,5 @@
+package com.example.basic;
+
 import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import javax.management.*;
@@ -122,7 +124,7 @@ public class SimpleDynamic extends NotificationBroadcasterSupport implements Dyn
         return resultList;
     }
 
-    public Object invoke(String operationName, Object[] param, String[] signature) throws
+    public Object invoke(String operationName, Object[] params, String[] signature) throws
             MBeanException, ReflectionException {
         if (operationName == null) {
             throw new RuntimeOperationsException(

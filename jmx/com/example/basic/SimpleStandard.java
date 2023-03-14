@@ -1,6 +1,8 @@
 package com.example.basic;
 
-import javax.management.*;
+import javax.management.AttributeChangeNotification;
+import javax.management.MBeanNotificationInfo;
+import javax.management.NotificationBroadcasterSupport;
 
 public class SimpleStandard extends NotificationBroadcasterSupport implements SimpleStandardMBean {
     public String getState() {

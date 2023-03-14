@@ -143,10 +143,13 @@ public class Server {
         echo(" and operations exposed for management");
         try {
             printSimpleAttributes(mbs, mbeanObjectName);
+
             echo("\n Setting State attribute to value \"new state\"");
             Attribute stateAttribute = new Attribute("state", "new state");
             mbs.setAttribute(mbeanObjectName, stateAttribute);
+
             printSimpleAttributes(mbs, mbeanObjectName);
+
             echo("\n Invoking reset operation...");
             mbs.invoke(mbeanObjectName, "reset", null, null);
 
