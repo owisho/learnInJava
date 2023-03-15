@@ -25,9 +25,9 @@ public class Server {
             String domain = mbs.getDefaultDomain();
             echo("\t Default Domain = " + domain);
             waitForEnterPressed();
-            domain = "com.example.basic";
+            domain = "com.example.basic";//因为修改了默认的package信息所以手动指定domain
 
-            String mbeanClassName = "SimpleStandard";
+            String mbeanClassName = "com.example.basic.SimpleStandard";
             String mbeanObjectNameStr =
                     domain + ":type=" + mbeanClassName + ",name=1";
             ObjectName mbeanObjectName =
@@ -40,7 +40,7 @@ public class Server {
             manageSimpleMBean(mbs, mbeanObjectName, mbeanClassName);
             waitForEnterPressed();
 
-            mbeanClassName = "SimpleDynamic";
+            mbeanClassName = "com.example.basic.SimpleDynamic";
             mbeanObjectNameStr =
                     domain + ":type=" + mbeanClassName + ",name=1";
             mbeanObjectName =
@@ -142,13 +142,13 @@ public class Server {
     }
 
     private static void manageSimpleMBean(MBeanServer mbs, ObjectName mbeanObjectName, String mbeanClassName) {
-        echo("\n>>> Manage the" + mbeanClassName + "MBean using its attributes ");
+        echo("\n>>> Manage the " + mbeanClassName + " MBean using its attributes ");
         echo(" and operations exposed for management");
         try {
             printSimpleAttributes(mbs, mbeanObjectName);
 
             echo("\n Setting State attribute to value \"new state\"");
-            Attribute stateAttribute = new Attribute("state", "new state");
+            Attribute stateAttribute = new Attribute("State", "new state");
             mbs.setAttribute(mbeanObjectName, stateAttribute);
 
             printSimpleAttributes(mbs, mbeanObjectName);
@@ -165,7 +165,7 @@ public class Server {
     private static void printSimpleAttributes(MBeanServer mbs, ObjectName mbeanObjectName) {
         try {
             echo("\nGetting attribute values:");
-            String state = (String) mbs.getAttribute(mbeanObjectName, "state");
+            String state = (String) mbs.getAttribute(mbeanObjectName, "State");
             Integer NbChanges = (Integer) mbs.getAttribute(mbeanObjectName, "NbChanges");
             echo("\tState=\"" + state + "\"");
             echo("\tNbChanges=" + NbChanges);
