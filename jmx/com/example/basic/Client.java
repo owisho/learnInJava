@@ -32,15 +32,16 @@ public class Client {
             waitForEnterPressed();
 
             String domain = mbsc.getDefaultDomain();
+            domain = "com.example.basic";
 
-            ObjectName stdMBeanName = new ObjectName(domain + ":type=SimpleStandard,name=2");
+            ObjectName stdMBeanName = new ObjectName(domain + ":type=com.example.basic.SimpleStandard,name=2");
             echo("\nCreate SimpleStandard MBean...");
-            mbsc.createMBean("SimpleStandard", stdMBeanName, null, null);
+            mbsc.createMBean("com.example.basic.SimpleStandard", stdMBeanName, null, null);
             waitForEnterPressed();
 
-            ObjectName dynMBeanName = new ObjectName(domain + ":type=SimpleDynamic,name=2");
+            ObjectName dynMBeanName = new ObjectName(domain + ":type=com.example.basic.SimpleDynamic,name=2");
             echo("\nCreate SimpleDynamic MBean...");
-            mbsc.createMBean("SimpleDynamic", dynMBeanName, null, null);
+            mbsc.createMBean("com.example.basic.SimpleDynamic", dynMBeanName, null, null);
             waitForEnterPressed();
 
             echo("\nMBean count = " + mbsc.getMBeanCount());

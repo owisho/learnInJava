@@ -1,0 +1,4 @@
+javac com/example/basic/*.java
+rmiregistry 9999 &
+java -classpath . com.example.basic.Server
+java -classpath . com.example.basic.Client
