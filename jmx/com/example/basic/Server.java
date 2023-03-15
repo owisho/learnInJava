@@ -1,3 +1,5 @@
+package com.example.basic;
+
 import java.io.IOException;
 import javax.management.Attribute;
 import javax.management.MBeanAttributeInfo;
@@ -23,6 +25,7 @@ public class Server {
             String domain = mbs.getDefaultDomain();
             echo("\t Default Domain = " + domain);
             waitForEnterPressed();
+            domain = "com.example.basic";
 
             String mbeanClassName = "SimpleStandard";
             String mbeanObjectNameStr =
